@@ -1,8 +1,8 @@
 #!/bin/sh
 
 ##some usable functions
-function usage(){
-    echo "Usage: $0 <filename>"
+function usage() {
+	echo "Usage: $0 <log_type>"
 }
 
 ##get the current path and initialize some constant values
@@ -25,4 +25,4 @@ if [[ $# -lt 1 ]]; then
 fi
 
 file_name=$1
-python $LIBS/summary_gc.py $GC_ORI_LOG_DIR $file_name $GC_RES_LOG_DIR
+python $LIBS/summary_gc.py $GC_ORI_LOG_DIR $GC_RES_LOG_DIR $file_name

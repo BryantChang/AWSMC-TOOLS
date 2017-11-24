@@ -8,6 +8,7 @@ log_base = sys.argv[1]
 res_path = sys.argv[2]
 log_name = sys.argv[3]
 log_full_dir = log_base + "/" + log_name
+print(log_full_dir)
 conf = open(log_full_dir)
 isExists=os.path.exists(res_path)
 if not isExists:
@@ -49,15 +50,15 @@ while index < len(a):
     if not a[index][0].isdigit():
         index+=1
         continue
-    sum_pf += long(a[index][0])
-    sum_inst += long(a[index][1])
-    sum_cycles += long(a[index][2])
-    sum_l1d_miss += long(a[index][3])
-    sum_l2_miss += long(a[index][4])
-    sum_dtlb_miss += long(a[index][5])
-    sum_llc_miss += long(a[index][6])
-    sum_load += long(a[index][7])
-    sum_store += long(a[index][8])
+    sum_pf += int(a[index][0])
+    sum_inst += int(a[index][1])
+    sum_cycles += int(a[index][2])
+    sum_l1d_miss += int(a[index][3])
+    sum_l2_miss += int(a[index][4])
+    sum_dtlb_miss += int(a[index][5])
+    sum_llc_miss += int(a[index][6])
+    sum_load += int(a[index][7])
+    sum_store += int(a[index][8])
     index += 1
     secs += 1
 

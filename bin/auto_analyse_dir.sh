@@ -1,5 +1,5 @@
 #!/bin/bash
-function usage(){
+function usage() {
 	echo "Usage: $0 <log_type>"
 }
 
@@ -24,18 +24,23 @@ CONF="${DIR}/conf"
 
 log_type=$1
 
-#if [[ $log_type = "gc" ]]; then
-#elif [[ $log_type = "monitor" ]]
+if [[ $log_type = "gc" ]]; then
+    script="summary_gc.sh"
+    log_dir=$GC_ORI_LOG_DIR
+elif [[ $log_type = "monitor" ]]; then
+    script="analyse_perf.sh"
+    log_dir=$MONITOR_ORI_LOG_DIR
+fi
 
 #
-#cd ${log_dir}
-#
-#for file in `ls *.log`; do
-#	echo "operating $file"
-#	python $CURDIR/analyse_perf.py $file
-#done
-#
-#echo "all done"
+cd ${log_dir}
+
+for file in `ls *.log`; do
+	echo "operating $file"
+	sh $BIN/$script $file
+done
+
+echo "all done"
 
 
 

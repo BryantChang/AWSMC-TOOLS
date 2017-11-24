@@ -2,7 +2,7 @@
 
 MONITOR_DIR=/home/hadoop/bryantchang/tools/monitor
 
-function usage(){
+function usage() {
 	echo "Usage:$0: monitor_log_path monitor_interval"
 	exit
 }

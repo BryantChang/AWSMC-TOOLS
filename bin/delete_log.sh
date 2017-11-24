@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function usage(){
+function usage() {
 	echo "Usage: $0 <type> <AppName> (<input_data> <exe_mem>(if you want to delete logs of one specific configuration))"
 }
 
