@@ -8,7 +8,6 @@ log_base = sys.argv[1]
 res_path = sys.argv[2]
 log_name = sys.argv[3]
 log_full_dir = log_base + "/" + log_name
-print(log_full_dir)
 conf = open(log_full_dir)
 isExists=os.path.exists(res_path)
 if not isExists:
