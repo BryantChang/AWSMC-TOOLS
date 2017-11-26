@@ -15,12 +15,10 @@ import os
  
 # pl.show()# show the plot on the screen
 
-gc_res_log_base = "/Users/bryantchang/Desktop/study/Research/experiment/for_remote/BryantChang/gc_logs/gc_result/"
-log_name = sys.argv[1]
-gc_res_full_log = gc_res_log_base + "detail_" + log_name
-
-gc_graph_path = "/Users/bryantchang/Desktop/study/Research/experiment/for_remote/BryantChang/gc_logs/gc_graphs/"
-
+gc_res_log_base = sys.argv[1]
+log_name = sys.argv[2]
+gc_res_full_log = gc_res_log_base + "/" + "detail_" + log_name
+gc_graph_path = sys.argv[3]
 
 isExists=os.path.exists(gc_graph_path)
 if not isExists:
@@ -28,7 +26,7 @@ if not isExists:
 log_handler = open(gc_res_full_log)
 log_info_arr = log_name.split(".")
 log_info = log_info_arr[0]
-gc_graph_full_path = gc_graph_path + log_info + ".png"
+gc_graph_full_path = gc_graph_path + "/" + log_info + ".png"
 
 pl.title(log_info)
 pl.xlabel('Stage No')

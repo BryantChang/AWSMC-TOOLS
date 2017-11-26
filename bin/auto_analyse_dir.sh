@@ -30,6 +30,9 @@ if [[ $log_type = "gc" ]]; then
 elif [[ $log_type = "monitor" ]]; then
     script="analyse_perf.sh"
     log_dir=$MONITOR_ORI_LOG_DIR
+elif [[ $log_type = "gc_graph" ]]; then
+    script="get_graph.sh"
+    log_dir=$MONITOR_ORI_LOG_DIR
 fi
 
 #
