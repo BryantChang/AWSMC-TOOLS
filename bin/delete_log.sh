@@ -9,6 +9,19 @@ if [[ $# -lt 2 ]]; then
 	exit
 fi
 
+
+##get the current path and initialize some constant values
+bin=`dirname "$0"`
+bin=`cd "$bin"; pwd`
+DIR=`cd $bin/../; pwd`
+
+LIBS="${DIR}/libs"
+BIN="${DIR}/bin"
+CONF="${DIR}/conf"
+
+
+##source the env
+. "${CONF}/env.sh"
 #executor_log_path="/home/hadoop/bryantchang/logs/sparklogs/executor_logs"
 #gc_original_path="/home/hadoop/bryantchang/logs/sparklogs/gc_logs"
 #gc_result_path="/home/hadoop/bryantchang/logs/sparklogs/gc_logs/gc_result"
