@@ -35,9 +35,8 @@ conf_handle.close()
 log_handle = open(log_path, 'a')
 log_handle.write(' '.join(event_arr)+'\n')
 while True:
-	a=','.join(code_arr)
-  # print a
-	out = popen("sudo perf stat -a -e %s sleep %f"%(a,interval))
+	b=','.join(code_arr)
+	out = popen("sudo perf stat -a -e %s sleep %f"%(b,interval))
         out =out.replace(',','')
         counters = re.findall('\s+(\d+)\s+', out, re.M)
 	log_handle.write(' '.join(counters)+ '\n')
