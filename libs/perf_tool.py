@@ -24,7 +24,7 @@ a=[i.split('=') for i in conf_handle.readlines()]
 index = 0
 while index < len(a):
     event = a[index][0]
-    code = a[index][1]
+    code = a[index][1].replace("\n", "")
     if event[0] == '#':
         index += 1
         continue
@@ -35,11 +35,11 @@ conf_handle.close()
 log_handle = open(log_path, 'a')
 log_handle.write(' '.join(event_arr)+'\n')
 while True:
-	b=','.join(code_arr)
-	out = popen("sudo perf stat -a -e %s sleep %f"%(b,interval))
+        b=','.join(code_arr)
+        out = popen("sudo perf stat -a -e %s sleep %f"%(b,interval))
         out =out.replace(',','')
         counters = re.findall('\s+(\d+)\s+', out, re.M)
-	log_handle.write(' '.join(counters)+ '\n')
-	log_handle.flush()
+        log_handle.write(' '.join(counters)+ '\n')
+        log_handle.flush()
 log_handle.close()
 
