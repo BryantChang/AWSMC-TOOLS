@@ -26,6 +26,7 @@ while index < len(a):
     event = a[index][0]
     code = a[index][1]
     if event[0] == '#':
+        index += 1
         continue
     event_arr.append(event)
     code_arr.append(code)
