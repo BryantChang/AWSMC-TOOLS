@@ -46,10 +46,11 @@ fi
 
 executor_log=${EXECUTOR_ORI_LOG_DIR}"/"${common_log_name}
 monitor_log=${MONITOR_ORI_LOG_DIR}"/"${common_log_name}
-monitor_result_log=${monitor_result_path}"/"${common_log_name}
-gc_comm_log=${gc_original_path}"/"${common_log_name}
-gc_detail_log=${gc_result_path}"/"${gc_detail_name}
-gc_summary_log=${gc_result_path}"/"${gc_summary_name}
+monitor_result_log=${MONITOR_RES_LOG_DIR}"/"${common_log_name}
+gc_comm_log=${GC_ORI_LOG_DIR}"/"${common_log_name}
+gc_detail_log=${GC_RES_LOG_DIR}"/"${gc_detail_name}
+gc_summary_log=${GC_RES_LOG_DIR}"/"${gc_summary_name}
+
 
 rm -rf $executor_log
 rm -rf $monitor_log

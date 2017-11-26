@@ -24,4 +24,4 @@ fi
 
 log_name=$1
 
-python get_graph.py $MONITOR_ORI_LOG_DIR $log_name $GC_GRAPH_DIR
+python $LIBS/get_graph.py $MONITOR_ORI_LOG_DIR $GC_RES_LOG_DIR $log_name $GC_GRAPH_DIR

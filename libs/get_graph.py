@@ -15,10 +15,11 @@ import os
  
 # pl.show()# show the plot on the screen
 
-gc_res_log_base = sys.argv[1]
-log_name = sys.argv[2]
+monitor_log_base = sys.argv[1]
+gc_res_log_base = sys.argv[2]
+log_name = sys.argv[3]
 gc_res_full_log = gc_res_log_base + "/" + "detail_" + log_name
-gc_graph_path = sys.argv[3]
+gc_graph_path = sys.argv[4]
 
 isExists=os.path.exists(gc_graph_path)
 if not isExists:
