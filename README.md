@@ -22,11 +22,18 @@ README.md(说明文档)
 
 ## 执行脚本入口目录bin目录介绍
 
-* perf工具脚本 perf_monitor.sh
+### perf工具脚本 perf_monitor.sh
 
+* 该脚本会指定统计Spark程序运行时的硬件计数器事件，
+包括"page fault", "instructions", "cycles", "l1d miss", 
+"l2 miss", "llc miss", "load", "store"，默认一秒中记录一次
+* 使用方法
+
+```bash
+perf_monitor.sh monitor_log_path 
+#其中monitor_log_path表示日志的存储路径
 ```
-该脚本会指定统计Spark程序运行时的硬件计数器事件，包括"page fault", "instructions", "cycles", "l1d miss", "l2 miss", "llc miss", "load", "store"
-```
+
 
 
 
