@@ -39,6 +39,14 @@ perf_monitor.sh monitor_log_path
 #其中monitor_log_path表示日志的存储绝对路径
 ```
 
+### 关闭perf工具脚本 perf_monitor_stop.sh
+
+* 该脚本会关闭运行在该节点上的perf工具脚本
+* 使用方法：
+```bash
+perf_monitor_stop.sh
+```
+
 
 ### perf通用脚本 perf_tools.sh(开发中)
 
@@ -62,13 +70,46 @@ analyse_perf.sh log_name
 #变量名为：原始日志路径--MONITOR_ORI_LOG_DIR 汇总日志路径--MONITOR_RES_LOG_DIR
 ```
 
-### 抓取GC脚本analyse_gc_log.sh
+### 抽取GC信息脚本 analyse_gc_log.sh
 
-* 该脚本会从Spark executor的日志中抓取出gc频率的相关信息（需要对Spark内核做少许修改）
+* 该脚本会从Spark executor的日志中抽取出GC频率的相关信息（需要对Spark内核做少许修改）
 * 使用方法：
 ```bash
 analyse_gc_log.sh log_name
-#其中log_name是日志的名称
+#其中log_name是日志的名称，GC的原始目录和抽取日志目录可在awsmc/conf/env.sh进行设置
+#变量名为：原始executor日志目录--EXECUTOR_ORI_LOG_DIR GC抽取日志路径--GC_ORI_LOG_DIR
+```
+
+
+### 汇总GC信息脚本 summary_gc.sh
+* 该脚本会根据抽取出的GC信息进行进一步的加工和汇总，生成gc汇总信息
+* 使用方法：
+```bash
+summary_gc.sh log_name
+#其中log_name表示日志名称，汇总日志路径可在awsmc/conf/env.sh进行设置
+#变量名为：GC汇总日志路径--GC_RES_LOG_DIR
+#该脚本会生成两份日志，其中一份是统计信息，路径为GC_RES_LOG_DIR/summary_{log_name}.log
+#另一份是各个Stage的详细信息，路径为GC_RES_LOG_DIR/detail_{log_name}.log
+```
+
+
+### GC趋势图绘制脚本 get_graph.sh
+
+* 该脚本会根据各个Stage的GC数据绘制GC趋势图
+* 使用方法：
+```bash
+get_graph.sh log_name
+#其中log_name表示日志名称，生成的图片路径可在awsmc/conf/env.sh进行设置
+#变量名为：GC趋势图路径--GC_GRAPH_DIR
+```
+
+### 删除日志脚本 delete_log.sh
+
+* 该脚本会删除指定条件下的负载日志或删除某个负载的全部日志
+* 使用方法：
+```bash
+delete_log.sh all app_name || delete_log.sh one app_name input_data_size exe_mem
+#其中app_name是负载名称 input_data_size表示该负载的输入数据量 exe_mem表示任务执行器内存配置
 ```
 
 
