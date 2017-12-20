@@ -27,12 +27,26 @@ README.md(说明文档)
 * 该脚本会指定统计Spark程序运行时的硬件计数器事件，
 包括"page fault", "instructions", "cycles", "l1d miss", 
 "l2 miss", "llc miss", "load", "store"，默认一秒中记录一次
-* 使用方法
+* 使用方法：
 
 ```bash
 perf_monitor.sh monitor_log_path 
 #其中monitor_log_path表示日志的存储路径
 ```
+
+
+### perf通用脚本 perf_tools.sh(开发中)
+
+* 该脚本可由用户配置需要统计的硬件计数器，交由该脚本进行统计，统计间隔也可由用户进行配置
+其中，要统计的硬件计数器可在awsmc/conf/eventmap.properties文件中进行配置，格式为"事件名称=事件码"
+事件码可在CPU使用手册中查询
+* 使用方法：
+```bash
+#首先需要配置
+perf_tools.sh monitor_log_path internal
+#其中monitor_log_path表示日志的存储路径,internal表示统计的间隔时间
+```
+
 
 
 
