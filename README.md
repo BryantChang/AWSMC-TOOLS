@@ -22,6 +22,11 @@ README.md(说明文档)
 
 ## 执行脚本入口目录bin目录介绍
 
+```
+统一说明：这里对于一个负载运行在一个特定的参数配置下，
+特定的输入数据量以及内存配置下的日志应保持统一名称，目的是方便后续进行统计
+```
+
 ### perf工具脚本 perf_monitor.sh
 
 * 该脚本会指定统计Spark程序运行时的硬件计数器事件，
@@ -31,7 +36,7 @@ README.md(说明文档)
 
 ```bash
 perf_monitor.sh monitor_log_path 
-#其中monitor_log_path表示日志的存储路径
+#其中monitor_log_path表示日志的存储绝对路径
 ```
 
 
@@ -42,9 +47,28 @@ perf_monitor.sh monitor_log_path
 事件码可在CPU使用手册中查询
 * 使用方法：
 ```bash
-#首先需要配置
 perf_tools.sh monitor_log_path internal
-#其中monitor_log_path表示日志的存储路径,internal表示统计的间隔时间
+#其中monitor_log_path表示日志的存储结对路径,internal表示统计的间隔时间
+```
+
+### 统计perf日志脚本 analyse_perf.sh
+
+* 该脚本会对perf日志进行汇总和统计
+* 使用方法：
+```bash
+analyse_perf.sh log_name
+#其中log_name是统计日志的名称，需要和原始日志名称保持一致，
+#原始日志名称可由用户自行进行设置，而原始日志和汇总日志的目录分别可在awsmc/conf/env.sh进行设置
+#变量名为：原始日志路径--MONITOR_ORI_LOG_DIR 汇总日志路径--MONITOR_RES_LOG_DIR
+```
+
+### 抓取GC脚本analyse_gc_log.sh
+
+* 该脚本会从Spark executor的日志中抓取出gc频率的相关信息（需要对Spark内核做少许修改）
+* 使用方法：
+```bash
+analyse_gc_log.sh log_name
+#其中log_name是日志的名称
 ```
 
 
