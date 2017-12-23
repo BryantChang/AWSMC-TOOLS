@@ -1,14 +1,14 @@
 #!/bin/bash
 
 
-function usage() {
-	echo "Usage:$0: monitor_log_path"
-	exit
-}
-
-if [[ $# -lt 1 ]]; then
-	usage
-fi
+#function usage() {
+#	echo "Usage:$0: monitor_log_path"
+#	exit
+#}
+#
+#if [[ $# -lt 1 ]]; then
+#	usage
+#fi
 
 ##get the current path and initialize some constant values
 bin=`dirname "$0"`
