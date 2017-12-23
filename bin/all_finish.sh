@@ -1,13 +1,12 @@
 #!/bin/bash
 
-
 function usage() {
-	echo "Usage:$0: monitor_log_path"
-	exit
+    echo "Usage: $0 conf_file"
 }
 
 if [[ $# -lt 1 ]]; then
-	usage
+    usage
+    exit
 fi
 
 ##get the current path and initialize some constant values
@@ -23,10 +22,6 @@ CONF="${DIR}/conf"
 ##source the env
 . "${CONF}/env.sh"
 
-echo "python ${LIBS}/hw115get_perf_new.py $1"
+conf_file=$1
 
-
-python ${LIBS}/hw115get_perf_new.py $1 1
-# python $MONITOR_DIR $1 $2
-
-
+python ${LIBS}/allfinish.py ${conf_file}

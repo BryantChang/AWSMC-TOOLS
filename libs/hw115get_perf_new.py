@@ -9,6 +9,7 @@ import time
 
 path=sys.argv[1]
 interval=float(sys.argv[2])
+print(interval)
 def popen(cmd):
     p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
