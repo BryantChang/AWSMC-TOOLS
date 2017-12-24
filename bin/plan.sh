@@ -26,12 +26,17 @@ CONF="${DIR}/conf"
 app=$1
 log_path=${TMP_DIR}/${app}.log
 
+if [[ -f ${log_path} ]]; then
+    rm -rf ${log_path}
+fi
+
+
 echo "initializing" >> ${log_path}
 echo "initializing"
 
 mkdir -p ${TMP_DIR}
 mkdir -p ${ERR_DIR}
-mkdir -p ${EVENT_LOG_DIR}
+mkdir -p ${EVENTLOG_DIR}
 
 echo "begin to generate"
 
