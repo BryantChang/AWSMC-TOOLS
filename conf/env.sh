@@ -25,7 +25,7 @@ GC_RES_LOG_DIR="/home/hadoop/bryantchang/logs/sparklogs/gc_logs/gc_result"
 ##internal result
 TMP_DIR="/home/hadoop/bryantchang/logs/tmp"
 ERR_DIR="/home/hadoop/bryantchang/logs/error"
-EVENT_LOG_DIR="/home/hadoop/bryant/logs/eventlogs"
+EVENTLOG_DIR="/home/hadoop/bryant/logs/eventlogs"
 
 
 

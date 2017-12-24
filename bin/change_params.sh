@@ -2,7 +2,7 @@
 
 
 function usage() {
-    echo "Usage: $0 params log_path"
+    echo "Usage: $0 app params input_data_size log_path"
 }
 
 if [[ $# -lt 2 ]]; then
@@ -25,8 +25,10 @@ CONF="${DIR}/conf"
 . "${CONF}/env.sh"
 . "${CONF}/sysenv.sh"
 
-params=$1
-log_path=$2
+app=$1
+params=$2
+input_data_size=$3
+log_path=$4
 
 
 spark_cores=`echo ${params} | cut -d '_' -f 1`
@@ -50,6 +52,8 @@ ${SPARK_HOME}/sbin/start-all.sh
 
 echo "generating the sample"
 echo "generating the sample" >> ${log_path}
+
+${BIN}/generate_sample.sh
 
 
 
