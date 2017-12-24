@@ -46,7 +46,7 @@ for input_mem in `cat ${CONF}/input_mem_${app}`; do
     echo "init mem is ${mem} m"
     echo "init mem is ${mem} m" >> ${log_path}
     for params in `cat ${CONF}/params`; do
-        ${bin}/change_params.sh ${app} ${params} ${mem} ${log_path}
+        ${bin}/change_params.sh ${app} ${params} ${log_path}
     done
 
 done
