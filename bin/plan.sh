@@ -35,9 +35,20 @@ mkdir -p ${EVENT_LOG_DIR}
 
 echo "begin to generate"
 
-for input in `cat ${CONF}/input_data_confs`; do
+for input_mem in `cat ${CONF}/input_mem_${app}`; do
+    if [[ "${input_mem:0:1}" = "#" ]]; then
+        continue;
+    fi
+    input=`echo ${input_mem} | cut -d '-' -f 1`
+    mem=`echo ${input_mem} | cut -d '-' -f 2`
     echo "current input data size is ${input} M"
-    
+    echo "current input data size is ${input} M" >> ${log_path}
+    echo "init mem is ${mem} m"
+    echo "init mem is ${mem} m" >> ${log_path}
+    for params in `cat ${CONF}/params`; do
+        ${bin}/change_params.sh ${app} ${params} ${mem} ${log_path}
+    done
+
 done
 
 
