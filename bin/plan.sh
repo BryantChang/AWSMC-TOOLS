@@ -64,7 +64,7 @@ for input_mem in `cat ${CONF}/input_mem_${app}`; do
         count=0
         while [[ ${count} -lt 3 ]]; do
             ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
-            rec_count=`cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | sed s/[[:space:]]//g`
+            rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | sed s/[[:space:]]//g`
             echo "${rec_count}"
             if [[ ${rec_count} -eq 0 ]]; then
                 count=`expr ${count} + 1`
