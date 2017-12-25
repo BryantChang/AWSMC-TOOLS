@@ -5,7 +5,7 @@ function usage() {
     echo "Usage: $0 app params log_path"
 }
 
-if [[ $# -lt 2 ]]; then
+if [[ $# -lt 3 ]]; then
     usage
     exit
 fi

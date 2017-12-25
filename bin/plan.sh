@@ -53,9 +53,12 @@ for input_mem in `cat ${CONF}/input_mem_${app}`; do
     echo "init mem is ${mem} m"
     echo "init mem is ${mem} m" >> ${log_path}
     for params in `cat ${CONF}/params`; do
+        if [[ "${params:0:1}" = "#" ]]; then
+            continue;
+        fi
         ${bin}/change_params.sh ${app} ${params} ${log_path}
         best_mem_path=${TMP_DIR}/${app}_${input}_${params}.log
-
+        ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
     done
 
 done
