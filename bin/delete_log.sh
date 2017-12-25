@@ -31,14 +31,18 @@ CONF="${DIR}/conf"
 type_no=$1
 app_name=$2
 
-if [[ $type_no = "all" ]]; then
+if [[ ${type_no} = "all" ]]; then
 	common_log_name="${app_name}*"
 	gc_detail_name="detail_${app_name}*"
 	gc_summary_name="summary_${app_name}*"
 
-elif [[ $type_no = "one" ]]; then
+elif [[ ${type_no} = "one" ]]; then
 	input_size=$3
 	exe_mem=$4
+    cores=`cat ${SPARK_HOME}/conf/spark-defaults.conf | grep 'spark.executor.cores' | cut -d ' ' -f 2`
+    parallelism=`cat ${SPARK_HOME}/conf/spark-defaults.conf | grep 'spark.default.parallelism' | cut -d ' ' -f 2`
+    rdd_compress=`cat ${SPARK_HOME}/conf/spark-defaults.conf | grep 'spark.rdd.compress' | cut -d ' ' -f 2`
+    shuffle_compress=`cat ${SPARK_HOME}/conf/spark-defaults.conf | grep 'spark.shuffle.compress' | cut -d ' ' -f 2`
 	common_log_name="${app_name}_${input_size}_${exe_mem}.log"
 	gc_detail_name="detail_${app_name}_${input_size}_${exe_mem}.log"
 	gc_summary_name="summary_${app_name}_${input_size}_${exe_mem}.log"
@@ -52,12 +56,12 @@ gc_detail_log=${GC_RES_LOG_DIR}"/"${gc_detail_name}
 gc_summary_log=${GC_RES_LOG_DIR}"/"${gc_summary_name}
 
 
-rm -rf $executor_log
-rm -rf $monitor_log
-rm -rf $monitor_result_log
-rm -rf $gc_comm_log
-rm -rf $gc_detail_log
-rm -rf $gc_summary_log
+rm -rf ${executor_log}
+rm -rf ${monitor_log}
+rm -rf ${monitor_result_log}
+rm -rf ${gc_comm_log}
+rm -rf ${gc_detail_log}
+rm -rf ${gc_summary_log}
 
 echo "finish"
 
