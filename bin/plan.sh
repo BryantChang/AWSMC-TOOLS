@@ -63,12 +63,15 @@ for input_mem in `cat ${CONF}/input_mem_${app}`; do
         shuffle_compress=`echo ${params} | cut -d '_' -f 5`
         count=0
         while [[ ${count} -lt 3 ]]; do
+            echo ${count}
             ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
             rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
             echo "${rec_count}"
             if [[ ${rec_count} -eq 0 ]]; then
                 count=`expr ${count} + 1`
             fi
+            mem=`expr ${mem} + ${MEM_STEP}`
+            echo ${mem}
         done
 
     done
