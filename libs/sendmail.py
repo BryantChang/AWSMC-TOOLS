@@ -3,9 +3,7 @@ import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from parseconf import *
-from email.mime.image import MIMEImage
-from email.header import Header
-import os
+
 
 
 
