@@ -57,7 +57,7 @@ for app in `cat ${CONF}/apps`; do
         echo "current input data size is ${input} M" >> ${log_path}
         echo "init mem is ${mem} m"
         echo "init mem is ${mem} m" >> ${log_path}
-        ${bin}/sample_finish ${CONF}/sysconf.properties ${app} ${mem}
+        ${bin}/sample_finish.sh ${CONF}/sysconf.properties ${app} ${mem}
         for params in `cat ${CONF}/params`; do
             if [[ "${params:0:1}" = "#" ]]; then
                 continue;
@@ -72,7 +72,7 @@ for app in `cat ${CONF}/apps`; do
                 ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
                 rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
                 if [[ ${rec_count} -eq 0 ]]; then
-                    ${bin}/generate_sample.sh ${SAMPLE_LOG} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
+                    ${bin}/generate_sample.sh ${sample_log_path} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
                     count=`expr ${count} + 1`
                 fi
                 mem=`expr ${mem} + ${MEM_STEP}`
