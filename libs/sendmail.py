@@ -11,11 +11,11 @@ sample_log = sys.argv[3]
 
 
 props = parse(conf_path)
-sender = props['sender']
-receiver = props['receiver']
-username = props['username']
-password = props['password']
-server = props['smtpserver']
+sender = props.get('sender')
+receiver = props.get('receiver')
+username = props.get('username')
+password = props.get('password')
+server = props.get('smtpserver')
 
 msgRoot = MIMEMultipart('related')
 msgRoot['Subject'] = 'Sample Finished'
