@@ -31,4 +31,4 @@ sample_log=$3
 
 
 
-${LIBS}/sendmail.py ${conf_file}  ${log_name} ${sample_log}
+python ${LIBS}/sendmail.py ${conf_file}  ${log_name} ${sample_log}
