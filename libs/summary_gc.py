@@ -55,7 +55,7 @@ while index < len(a):
     tmp_stage = int(a[index][0])
     tmp_gc_count = int(a[index][2])
     if tmp_stage == cur_stage:
-        if tmp_gc_count > cur_gc_count:
+        if tmp_gc_count > tmp_max_gc:
             tmp_max_gc = tmp_gc_count
     elif tmp_stage > cur_stage:
         count = tmp_max_gc - cur_gc_count
