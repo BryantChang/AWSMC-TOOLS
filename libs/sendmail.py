@@ -20,7 +20,6 @@ server = props.get('smtpserver')
 msgRoot = MIMEMultipart('related')
 msgRoot['Subject'] = 'Sample Finished'
 
-#构造附件
 att = MIMEText(open(sample_log, 'rb').read(), 'base64', 'utf-8')
 att["Content-Type"] = 'application/octet-stream'
 att["Content-Disposition"] = 'attachment; filename=%s'%(log_name)
