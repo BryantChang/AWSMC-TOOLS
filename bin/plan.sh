@@ -57,7 +57,7 @@ for app in `cat ${CONF}/apps`; do
         echo "current input data size is ${input} M" >> ${log_path}
         echo "init mem is ${mem} m"
         echo "init mem is ${mem} m" >> ${log_path}
-        ${bin}/sample_finish.sh ${CONF}/sysconf.properties ${app} ${mem}
+        ${bin}/sample_finish.sh ${CONF}/sysconf.properties ${app} ${input}
         for params in `cat ${CONF}/params`; do
             if [[ "${params:0:1}" = "#" ]]; then
                 continue;
@@ -83,5 +83,9 @@ for app in `cat ${CONF}/apps`; do
     done
 
 done
+
+
+${bin}/sendmail.sh ${CONF}/sysconf.properties ${sample_log_path} sample_pmc_${begin_ts}.csv
+${bin}/all_finish.sh ${CONF}/sysconf.properties
 
 

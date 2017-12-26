@@ -39,6 +39,8 @@ sed -i "/SPARK_EXECUTOR_MEMORY=/ c SPARK_EXECUTOR_MEMORY=\"${mem}m\"" ${SPARKBEN
 
 ${SPARKBENCH_HOME}/${app}/bin/run.sh
 
+#echo "run workload ${app}"
+
 
 
 
