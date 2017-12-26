@@ -29,6 +29,7 @@ log_prefix=$3
 
 gcsd=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${log_prefix}.log | grep ${app} | cut -f 8| sed s/[[:space:]]//g`
 pf=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "Page" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
+ipc==`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "IPC" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 l1d=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "L1D" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 l2=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "L2" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 llc=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "LLC" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
