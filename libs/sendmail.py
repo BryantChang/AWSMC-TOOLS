@@ -5,9 +5,6 @@ from email.mime.text import MIMEText
 from parseconf import *
 
 
-
-
-
 conf_path = sys.argv[1]
 log_name = sys.argv[2]
 sample_log = sys.argv[3]
@@ -26,7 +23,7 @@ msgRoot['Subject'] = 'Sample Finished'
 #构造附件
 att = MIMEText(open(sample_log, 'rb').read(), 'base64', 'utf-8')
 att["Content-Type"] = 'application/octet-stream'
-att["Content-Disposition"] = 'attachment; filename='
+att["Content-Disposition"] = 'attachment; filename=%s'%(log_name)
 msgRoot.attach(att)
 
 

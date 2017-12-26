@@ -26,8 +26,9 @@ CONF="${DIR}/conf"
 . "${CONF}/sysenv.sh"
 
 conf_file=$1
-sample_log=$2
-log_name=$3
+log_name=$2
+sample_log=$3
 
 
-${LIBS}/sendmail.py ${conf_file} ${sample_log} ${log_name}
+
+${LIBS}/sendmail.py ${conf_file}  ${log_name} ${sample_log}
