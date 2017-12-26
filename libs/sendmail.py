@@ -1,11 +1,13 @@
 import smtplib
+import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from parseconf import *
 from email.mime.image import MIMEImage
 from email.header import Header
 import os
-import sys
-from parseconf import *
+
+
 
 
 conf_path = sys.argv[1]
@@ -21,7 +23,7 @@ password = props['password']
 server = props['smtpserver']
 
 msgRoot = MIMEMultipart('related')
-msgRoot['Subject'] = 'sample finish'
+msgRoot['Subject'] = 'Sample Finished'
 
 #构造附件
 att = MIMEText(open(sample_log, 'rb').read(), 'base64', 'utf-8')
