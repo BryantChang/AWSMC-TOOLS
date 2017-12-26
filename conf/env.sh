@@ -33,6 +33,7 @@ GC_RES_LOG_DIR="/home/hadoop/bryantchang/logs/sparklogs/gc_logs/gc_result"
 TMP_DIR="/home/hadoop/bryantchang/logs/tmp"
 ERR_DIR="/home/hadoop/bryantchang/logs/error"
 EVENTLOG_DIR="/home/hadoop/bryantchang/logs/eventlogs"
+SAMPLE_LOG="/home/hadoop/bryantchang/logs/samplelogs"
 
 
 ###Spark config
