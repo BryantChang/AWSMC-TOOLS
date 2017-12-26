@@ -3,9 +3,9 @@ import sys
 
 conf_path = sys.argv[1]
 appname = sys.argv[2]
-total_sample = sys.argv[3]
+mem = sys.argv[3]
 
 
-message = "Sample generate of appName:%s finished!\nsampleCount:%s" % (appname, total_sample)
+message = "Sample generate of appName:%s finished!\nmem:%sM" % (appname, mem)
 
 sms(conf_path, message)

@@ -1,13 +1,9 @@
 #!/bin/bash
 
 function usage() {
-    echo "Usage: $0 app_name"
+    echo "Usage: $0"
 }
 
-if [[ $# -lt 1 ]]; then
-    usage
-    exit
-fi
 
 ##get the current path and initialize some constant values
 bin=`dirname "$0"`
@@ -23,8 +19,10 @@ CONF="${DIR}/conf"
 . "${CONF}/env.sh"
 . "${CONF}/sysenv.sh"
 
-app=$1
-log_path=${TMP_DIR}/${app}.log
+
+begin_ts=`date +%Y-%m-%d-%H-%M-%S`
+sample_log_path=${SAMPLE_LOG}/sample_pmc_${begin_ts}.csv
+log_path=${TMP_DIR}/${begin_ts}.log
 
 
 
@@ -42,48 +40,48 @@ mkdir -p ${EVENTLOG_DIR}
 mkdir -p ${SAMPLE_LOG}
 
 
-begin_ts=`date +%Y-%m-%d-%H-%M-%S`
-sample_log_path=${SAMPLE_LOG}/sample_pmc_${begin_ts}.csv
+
 
 echo "begin to generate"
 
 touch ${sample_log_path}
 echo "GCSD,pf,IPC,L1dmiss,L2miss,LLCmiss,LSR" >> ${sample_log_path}
-
-for input_mem in `cat ${CONF}/input_mem_${app}`; do
-    if [[ "${input_mem:0:1}" = "#" ]]; then
-        continue;
-    fi
-    input=`echo ${input_mem} | cut -d '-' -f 1`
-    mem=`echo ${input_mem} | cut -d '-' -f 2`
-    echo "current input data size is ${input} M"
-    echo "current input data size is ${input} M" >> ${log_path}
-    echo "init mem is ${mem} m"
-    echo "init mem is ${mem} m" >> ${log_path}
-    for params in `cat ${CONF}/params`; do
-        if [[ "${params:0:1}" = "#" ]]; then
+for app in `cat ${CONF}/apps`; do
+    for input_mem in `cat ${CONF}/input_mem_${app}`; do
+        if [[ "${input_mem:0:1}" = "#" ]]; then
             continue;
         fi
-        ${bin}/change_params.sh ${app} ${params} ${log_path}
-        spark_cores=`echo ${params} | cut -d '_' -f 1`
-        spark_parallelism=`echo ${params} | cut -d '_' -f 3`
-        rdd_compress=`echo ${params} | cut -d '_' -f 4`
-        shuffle_compress=`echo ${params} | cut -d '_' -f 5`
-        count=0
-        while [[ ${count} -lt 3 ]]; do
-            echo ${count}
-            ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
-            rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
-            if [[ ${rec_count} -eq 0 ]]; then
-                count=`expr ${count} + 1`
+        input=`echo ${input_mem} | cut -d '-' -f 1`
+        mem=`echo ${input_mem} | cut -d '-' -f 2`
+        echo "current input data size is ${input} M"
+        echo "current input data size is ${input} M" >> ${log_path}
+        echo "init mem is ${mem} m"
+        echo "init mem is ${mem} m" >> ${log_path}
+        ${bin}/sample_finish ${CONF}/sysconf.properties ${app} ${mem}
+        for params in `cat ${CONF}/params`; do
+            if [[ "${params:0:1}" = "#" ]]; then
+                continue;
             fi
-            mem=`expr ${mem} + ${MEM_STEP}`
+            ${bin}/change_params.sh ${app} ${params} ${log_path}
+            spark_cores=`echo ${params} | cut -d '_' -f 1`
+            spark_parallelism=`echo ${params} | cut -d '_' -f 3`
+            rdd_compress=`echo ${params} | cut -d '_' -f 4`
+            shuffle_compress=`echo ${params} | cut -d '_' -f 5`
+            count=0
+            while [[ ${count} -lt 3 ]]; do
+                ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
+                rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
+                if [[ ${rec_count} -eq 0 ]]; then
+                    ${bin}/generate_sample.sh ${SAMPLE_LOG} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
+                    count=`expr ${count} + 1`
+                fi
+                mem=`expr ${mem} + ${MEM_STEP}`
+            done
+
         done
 
     done
 
 done
-
-
 
 

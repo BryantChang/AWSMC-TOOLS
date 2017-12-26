@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage() {
-    echo "Usage: $0 confName appName sampleCount"
+    echo "Usage: $0 confName appName mem"
 }
 
 if [[ $# -lt 3 ]]; then
