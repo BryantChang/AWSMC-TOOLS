@@ -11,6 +11,7 @@ sample_log = sys.argv[3]
 
 
 props = parse(conf_path)
+
 sender = props.get('sender')
 receiver = props.get('receiver')
 username = props.get('username')

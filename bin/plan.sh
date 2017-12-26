@@ -85,6 +85,8 @@ for app in `cat ${CONF}/apps`; do
 done
 
 
+
+
 ${bin}/sendmail.sh ${CONF}/sysconf.properties sample_pmc_${begin_ts}.csv ${sample_log_path}
 ${bin}/all_finish.sh ${CONF}/sysconf.properties
 
