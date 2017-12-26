@@ -35,4 +35,4 @@ l2=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "L2" |
 llc=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "LLC" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 lsr=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "Load-Store" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 
-echo "${gcsd},${pf},${ipc} ${l1d},${l2},${llc},${lsr}" >> ${sample_path}
+echo "${gcsd},${pf},${ipc},${l1d},${l2},${llc},${lsr}" >> ${sample_path}
