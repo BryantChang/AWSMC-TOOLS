@@ -42,8 +42,9 @@ max_gc_count = 0
 max_stage = 0
 cur_gc_count = int(a[0][2])
 cur_stage = int(a[0][0])
+tmp_max_gc = cur_gc_count
 recompute_time = 0
-index = 0
+index = 1
 gc_counts = []
 detail_log_handler = open(detail_log_full_path, 'w')
 detail_log_handler.write('App Name: %s\n'%app_name)
@@ -53,8 +54,11 @@ detail_log_handler.write('Detail GC On each Stage: \n')
 while index < len(a):
     tmp_stage = int(a[index][0])
     tmp_gc_count = int(a[index][2])
-    if tmp_stage > cur_stage:
-        count = tmp_gc_count - cur_gc_count
+    if tmp_stage == cur_stage:
+        if tmp_gc_count > cur_gc_count:
+            tmp_max_gc = tmp_gc_count
+    elif tmp_stage > cur_stage:
+        count = tmp_max_gc - cur_gc_count
         gc_counts.append(count)
         detail_log_handler.write("Stage %s: %d\n"%(cur_stage, count))
         if count > max_gc_count:
@@ -62,16 +66,11 @@ while index < len(a):
             max_stage = cur_stage
         cur_stage = tmp_stage
         cur_gc_count = tmp_gc_count
-        index += 1
-    elif tmp_stage < cur_stage:
+    else:
         recompute_time += 1
         cur_stage = tmp_stage
         cur_gc_count = tmp_gc_count
-        index += 1
-    else:
-        index += 1
-    
-        
+    index += 1
 detail_log_handler.close()
 summary_log_handler = open(summary_log_full_path, 'w')
 std = getStd(gc_counts)
