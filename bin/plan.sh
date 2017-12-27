@@ -52,7 +52,7 @@ for app in `cat ${CONF}/apps`; do
             continue;
         fi
         input=`echo ${input_mem} | cut -d '-' -f 1`
-        mem=`echo ${input_mem} | cut -d '-' -f 2`
+        init_mem=`echo ${input_mem} | cut -d '-' -f 2`
         echo "current input data size is ${input} M"
         echo "current input data size is ${input} M" >> ${log_path}
         echo "init mem is ${mem} m"
@@ -62,6 +62,7 @@ for app in `cat ${CONF}/apps`; do
             if [[ "${params:0:1}" = "#" ]]; then
                 continue;
             fi
+            mem=${init_mem}
             ${bin}/change_params.sh ${app} ${params} ${log_path}
             spark_cores=`echo ${params} | cut -d '_' -f 1`
             spark_parallelism=`echo ${params} | cut -d '_' -f 3`
