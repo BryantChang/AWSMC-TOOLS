@@ -28,6 +28,7 @@ sample_path=$2
 log_prefix=$3
 
 gcsd=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${log_prefix}.log | grep ${app} | cut -f 8| sed s/[[:space:]]//g`
+gcvc = `ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${log_prefix}.log | grep ${app} | cut -f 9| sed s/[[:space:]]//g`
 pf=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "Page" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 ipc=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "IPC" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 l1d=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "L1D" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
@@ -35,4 +36,4 @@ l2=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "L2" |
 llc=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "LLC" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 lsr=`ssh ${SLAVE_HOST} cat ${MONITOR_RES_LOG_DIR}/${log_prefix}.log | grep "Load-Store" | cut -d ':' -f 2 | sed s/[[:space:]]//g `
 
-echo "${gcsd},${pf},${ipc},${l1d},${l2},${llc},${lsr}" >> ${sample_path}
+echo "${gcsd},${gcvc},${pf},${ipc},${l1d},${l2},${llc},${lsr}" >> ${sample_path}
