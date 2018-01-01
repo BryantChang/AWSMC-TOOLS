@@ -32,6 +32,7 @@ sum_pf = 0
 sum_inst = 0
 sum_cycles = 0
 sum_l1d_miss = 0
+sum_l1i_miss = 0
 sum_l2_miss = 0
 sum_dtlb_miss = 0
 sum_llc_miss = 0
@@ -53,11 +54,12 @@ while index < len(a):
     sum_inst += int(a[index][1])
     sum_cycles += int(a[index][2])
     sum_l1d_miss += int(a[index][3])
-    sum_l2_miss += int(a[index][4])
-    sum_dtlb_miss += int(a[index][5])
-    sum_llc_miss += int(a[index][6])
-    sum_load += int(a[index][7])
-    sum_store += int(a[index][8])
+    sum_l1i_miss += int(a[index][4])
+    sum_l2_miss += int(a[index][5])
+    sum_dtlb_miss += int(a[index][6])
+    sum_llc_miss += int(a[index][7])
+    sum_load += int(a[index][8])
+    sum_store += int(a[index][9])
     index += 1
     secs += 1
 
@@ -70,6 +72,7 @@ res_file_handle.write('IPC: %.2f\n'%(float(sum_inst)/sum_cycles))
 res_file_handle.write('Cycles(E9): %.2f\n'%float((sum_cycles)/one_e_nine))
 res_file_handle.write('Instructions(E9): %.2f\n'%float((sum_inst)/one_e_nine))
 res_file_handle.write('L1D Cache Miss: %.2f\n'%float(sum_l1d_miss*1000/sum_inst))
+res_file_handle.write('L1I Cache Miss: %.2f\n'%float(sum_l1i_miss*1000/sum_inst))
 res_file_handle.write('L2 Cache Miss: %.2f\n'%float(sum_l2_miss*1000/sum_inst))
 res_file_handle.write('LLC Cache Miss: %.2f\n'%float(sum_llc_miss*1000/sum_inst))
 res_file_handle.write('DTLB Cache Miss: %.2f\n'%float(sum_dtlb_miss*1000/sum_inst))

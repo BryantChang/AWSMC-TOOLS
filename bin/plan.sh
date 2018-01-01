@@ -45,7 +45,7 @@ mkdir -p ${SAMPLE_LOG}
 echo "begin to generate"
 
 touch ${sample_log_path}
-echo "GCSD,pf,IPC,L1dmiss,L2miss,LLCmiss,LSR" >> ${sample_log_path}
+echo "GCSD, GCVC,pf,IPC,L1dmiss, L1imiss,L2miss,LLCmiss,LSR" >> ${sample_log_path}
 for app in `cat ${CONF}/apps`; do
     for input_mem in `cat ${CONF}/input_mem_${app}`; do
         if [[ "${input_mem:0:1}" = "#" ]]; then
