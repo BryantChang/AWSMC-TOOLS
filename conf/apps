@@ -4,5 +4,5 @@ SVM
 Terasort
 PCA
 ShortestPaths
-PageRank
-SVDPlusPlus
+#PageRank
+#SVDPlusPlus
