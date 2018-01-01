@@ -63,13 +63,13 @@ for app in `cat ${CONF}/apps`; do
                 continue;
             fi
             mem=${init_mem}
-            ${bin}/change_params.sh ${app} ${params} ${log_path}
             spark_cores=`echo ${params} | cut -d '_' -f 1`
             spark_parallelism=`echo ${params} | cut -d '_' -f 3`
             rdd_compress=`echo ${params} | cut -d '_' -f 4`
             shuffle_compress=`echo ${params} | cut -d '_' -f 5`
             count=0
             while [[ ${count} -lt 3 ]]; do
+                ${bin}/change_params.sh ${app} ${params} ${log_path}
                 ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
                 rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
                 if [[ ${rec_count} -eq 0 ]]; then
