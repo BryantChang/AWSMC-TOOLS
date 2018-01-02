@@ -75,9 +75,11 @@ for app in `cat ${CONF}/apps`; do
                 gcsd=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 8| sed s/[[:space:]]//g`
                 gcvc=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 9| sed s/[[:space:]]//g`
                 if [[ ${rec_count} -eq 0 ]]; then
-                    if [[ ${gcsd} != "nan" -a ${gcvc} != "nan" ]]; then
-                        ${bin}/generate_sample.sh ${app} ${sample_log_path} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
-                        count=`expr ${count} + 1`
+                    if [[ ${gcsd} != "nan" ]]; then
+                        if [[ ${gcvc} != "nan" ]]; then
+                            ${bin}/generate_sample.sh ${app} ${sample_log_path} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
+                            count=`expr ${count} + 1`
+                        fi
                     fi
                 fi
                 mem=`expr ${mem} + ${MEM_STEP}`
