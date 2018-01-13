@@ -31,5 +31,5 @@ conf_log_path="${CONF}/${EVENTMAP_CONF}"
 
 #
 
-python ${LIBS}/perf_tools.sh $conf_log_path $res_log_path $internal
+python ${LIBS}/perf_tool.py $conf_log_path $res_log_path $internal
 
