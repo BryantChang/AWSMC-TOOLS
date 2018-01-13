@@ -21,12 +21,13 @@ CONF="${DIR}/conf"
 
 ##source the env
 . "${CONF}/env.sh"
+. "${CONF}/sysenv.sh"
 
 res_log_path=$1
 internal=$2
 
 
-conf_log_path="${CONF}/eventmap.properties"
+conf_log_path="${CONF}/${EVENTMAP_CONF}"
 
 python ${LIBS}/perf_tools.sh $conf_log_path $res_log_path $internal
 

@@ -5,6 +5,7 @@ function usage() {
 }
 
 
+
 ##get the current path and initialize some constant values
 bin=`dirname "$0"`
 bin=`cd "$bin"; pwd`
@@ -45,7 +46,7 @@ mkdir -p ${SAMPLE_LOG}
 echo "begin to generate"
 
 touch ${sample_log_path}
-echo "GCSD, GCVC,pf,IPC,L1dmiss, L1imiss,L2miss,LLCmiss,LSR" >> ${sample_log_path}
+echo "GCSD,GCVC,pf,IPC,L1dmiss,L1imiss,L2miss,LLCmiss,LSR" >> ${sample_log_path}
 for app in `cat ${CONF}/apps`; do
     for input_mem in `cat ${CONF}/input_mem_${app}`; do
         if [[ "${input_mem:0:1}" = "#" ]]; then
@@ -68,7 +69,7 @@ for app in `cat ${CONF}/apps`; do
             rdd_compress=`echo ${params} | cut -d '_' -f 4`
             shuffle_compress=`echo ${params} | cut -d '_' -f 5`
             count=0
-            while [[ ${count} -lt 3 ]]; do
+            while [[ ${count} -lt ${MEM_PER_PAR} ]]; do
                 ${bin}/change_params.sh ${app} ${params} ${log_path}
                 ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
                 rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
