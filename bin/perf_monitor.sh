@@ -1,15 +1,14 @@
 #!/bin/bash
 
-
 function usage() {
-	echo "Usage:$0: monitor_log_path"
-	exit
+    echo "Usage $0 <res_log_path> <internal>"
 }
 
-if [[ $# -lt 1 ]]; then
-	usage
-fi
 
+if [[ $# -lt 2 ]]; then
+    usage
+    exit
+fi
 ##get the current path and initialize some constant values
 bin=`dirname "$0"`
 bin=`cd "$bin"; pwd`
@@ -22,11 +21,15 @@ CONF="${DIR}/conf"
 
 ##source the env
 . "${CONF}/env.sh"
+. "${CONF}/sysenv.sh"
 
-echo "python ${LIBS}/hw115get_perf_new.py $1"
+res_log_path=$1
+internal=$2
 
 
-python ${LIBS}/hw115get_perf_new.py $1 1
-# python $MONITOR_DIR $1 $2
+conf_log_path="${CONF}/${EVENTMAP_CONF}"
 
+#
+
+python ${LIBS}/perf_tool.py ${conf_log_path} ${res_log_path} ${MONITOR_INTERNAL}
 
