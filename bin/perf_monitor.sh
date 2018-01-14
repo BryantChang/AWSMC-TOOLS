@@ -1,11 +1,11 @@
 #!/bin/bash
 
 function usage() {
-    echo "Usage $0 <res_log_path> <internal>"
+    echo "Usage $0 <res_log_path>"
 }
 
 
-if [[ $# -lt 2 ]]; then
+if [[ $# -lt 1 ]]; then
     usage
     exit
 fi
@@ -28,6 +28,7 @@ internal=$2
 
 
 conf_log_path="${CONF}/${EVENTMAP_CONF}"
+echo ${conf_log_path}
 
 #
 
