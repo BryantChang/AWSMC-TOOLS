@@ -1,6 +1,6 @@
 #exe_cores_blocksize_parallelism_rddcompress_shufflecompress
-2_128_4_1_1
-2_128_4_0_0
+2_128_4_true_true
+2_128_4_false_false
 #2_128_8_1_1
 #2_128_8_0_0
 #2_128_12_1_1
