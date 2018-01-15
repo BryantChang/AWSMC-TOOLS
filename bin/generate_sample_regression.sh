@@ -35,5 +35,6 @@ block_size=`echo ${features} | cut -d '_' -f 3`
 parallelism=`echo ${features} | cut -d '_' -f 4`
 rdd_compress=`echo ${features} | cut -d '_' -f 5`
 shuffle_compress=`echo ${features} | cut -d '_' -f 6`
+best_mem=`echo ${features} | cut -d '_' -f 7`
 
-echo "${input_size},${exe_cores},${block_size},${parallelism},${rdd_compress},${shuffle_compress}" >> ${sample_log_path}
+echo "${input_size},${exe_cores},${block_size},${parallelism},${rdd_compress},${shuffle_compress},${best_mem}" >> ${sample_log_path}
