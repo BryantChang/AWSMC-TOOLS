@@ -41,6 +41,7 @@ echo "set parameters" >> ${log_path}
 sed -i "/spark.executor.cores/ c spark.executor.cores ${spark_cores}" ${SPARK_HOME}/conf/spark-defaults.conf
 sed -i "/spark.default.parallelism/ c spark.default.parallelism ${spark_parallelism}" ${SPARK_HOME}/conf/spark-defaults.conf
 sed -i "/spark.rdd.compress/ c spark.rdd.compress ${rdd_compress}" ${SPARK_HOME}/conf/spark-defaults.conf
+sed -i "/spark.rdd.compress/ c spark.shuffle.compress ${shuffle_compress}" ${SPARK_HOME}/conf/spark-defaults.conf
 sed -i "/spark.executor.cores/ c spark.executor.cores ${spark_cores}" ${SPARK_HOME}/conf/spark-defaults.conf
 
 ${TOOLS_SCRIPT_HOME}/mscp.sh ${TOOLS_SCRIPT_HOME}/passwd_config dir ${SPARK_HOME}/conf ${SPARK_HOME}
