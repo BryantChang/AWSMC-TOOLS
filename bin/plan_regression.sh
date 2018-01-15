@@ -72,6 +72,7 @@ for app_line in `cat ${CONF}/apps_regression`; do
         fi
         input=`echo ${input_mem} | cut -d '-' -f 1`
         init_mem=`echo ${input_mem} | cut -d '-' -f 2`
+        mem=${init_mem}
         echo "current input data size is ${input} M"
         echo "current input data size is ${input} M" >> ${log_path}
         echo "init mem is ${mem} m"

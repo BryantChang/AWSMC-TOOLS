@@ -4,3 +4,4 @@ block_size
 parallelism
 rdd_compress
 shuffle_compress
+best_mem
