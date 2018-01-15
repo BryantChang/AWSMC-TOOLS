@@ -1,0 +1,6 @@
+input_size
+block_size
+exe_cores
+parallelism
+rdd_compress
+shuffle_compress
