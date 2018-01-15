@@ -33,8 +33,20 @@ input_size=`echo ${features} | cut -d '_' -f 1`
 exe_cores=`echo ${features} | cut -d '_' -f 2`
 block_size=`echo ${features} | cut -d '_' -f 3`
 parallelism=`echo ${features} | cut -d '_' -f 4`
-rdd_compress=`echo ${features} | cut -d '_' -f 5`
-shuffle_compress=`echo ${features} | cut -d '_' -f 6`
+rdd_compress_boolean=`echo ${features} | cut -d '_' -f 5`
+shuffle_compress_boolean=`echo ${features} | cut -d '_' -f 6`
 best_mem=`echo ${features} | cut -d '_' -f 7`
 
-echo "${input_size},${exe_cores},${block_size},${parallelism},${rdd_compress},${shuffle_compress},${best_mem}" >> ${sample_log_path}
+if [[ ${rdd_compress_boolean} = "true" ]]; then
+    rdd_compress_value=1
+elif [[ ${rdd_compress_boolean} = "false" ]]; then
+    rdd_compress_value=0
+fi
+
+if [[ ${shuffle_compress_boolean} = "true" ]]; then
+    shuffle_compress_value=1
+elif [[ ${shuffle_compress_boolean} = "false" ]]; then
+    shuffle_compress_value=0
+fi
+
+echo "${input_size},${exe_cores},${block_size},${parallelism},${rdd_compress_value},${shuffle_compress_value},${best_mem}" >> ${sample_log_path}
