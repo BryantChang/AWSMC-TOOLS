@@ -1,4 +1,3 @@
-#!/bin/bash
 #TOOLS_SCRIPT_HOME="/home/zc/bryantchang/Linux-Scripts/System_scripts/ssh"
 TOOLS_SCRIPT_HOME="/home/hadoop/bryantchang/tools/Scripts/System_scripts/ssh"
 SAMPLE_COUNT=75

@@ -63,55 +63,56 @@ done
 
 
 
-#for app in `cat ${CONF}/apps`; do
-#    for input_mem in `cat ${CONF}/input_mem_${app}`; do
-#        if [[ "${input_mem:0:1}" = "#" ]]; then
-#            continue;
-#        fi
-#        input=`echo ${input_mem} | cut -d '-' -f 1`
-#        init_mem=`echo ${input_mem} | cut -d '-' -f 2`
-#        echo "current input data size is ${input} M"
-#        echo "current input data size is ${input} M" >> ${log_path}
-#        echo "init mem is ${mem} m"
-#        echo "init mem is ${mem} m" >> ${log_path}
-#        ${bin}/sample_finish.sh ${CONF}/sysconf.properties ${app} ${input}
-#        for params in `cat ${CONF}/params_classify`; do
-#            if [[ "${params:0:1}" = "#" ]]; then
-#                continue;
-#            fi
-#            mem=${init_mem}
-#            spark_cores=`echo ${params} | cut -d '_' -f 1`
-#            spark_parallelism=`echo ${params} | cut -d '_' -f 3`
-#            rdd_compress=`echo ${params} | cut -d '_' -f 4`
-#            shuffle_compress=`echo ${params} | cut -d '_' -f 5`
-#            count=0
-#            while [[ ${count} -lt ${MEM_PER_PAR} ]]; do
-#                ${bin}/change_params.sh ${app} ${params} ${log_path}
-#                ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
-#                rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
-#                gcsd=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 8| sed s/[[:space:]]//g`
-#                gcvc=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 9| sed s/[[:space:]]//g`
-#                if [[ ${rec_count} -eq 0 ]]; then
-#                    if [[ ${gcsd} != "nan" ]]; then
-#                        if [[ ${gcvc} != "nan" ]]; then
-#                            ${bin}/generate_sample_classify.sh ${app} ${sample_log_path} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
-#                            count=`expr ${count} + 1`
-#                        fi
-#                    fi
-#                fi
-#                mem=`expr ${mem} + ${MEM_STEP}`
-#            done
-#
-#        done
-#
-#    done
-#
-#done
-#
-#
-#
-#
+for app_line in `cat ${CONF}/apps_regression`; do
+    app=`echo ${app_line} | cut -d '=' -f 1`
+    type_no=`echo ${app_line} | cut -d '=' -f 2`
+    for input_mem in `cat ${CONF}/input_mem_${app}`; do
+        if [[ "${input_mem:0:1}" = "#" ]]; then
+            continue;
+        fi
+        input=`echo ${input_mem} | cut -d '-' -f 1`
+        init_mem=`echo ${input_mem} | cut -d '-' -f 2`
+        echo "current input data size is ${input} M"
+        echo "current input data size is ${input} M" >> ${log_path}
+        echo "init mem is ${mem} m"
+        echo "init mem is ${mem} m" >> ${log_path}
+        ${bin}/sample_finish.sh ${CONF}/sysconf.properties ${app} ${input}
+        #each parameter get one sample(the best memory configuration)
+        for params in `cat ${CONF}/params_regression`; do
+            if [[ "${params:0:1}" = "#" ]]; then
+                continue;
+            fi
+            mem=${init_mem}
+            spark_cores=`echo ${params} | cut -d '_' -f 1`
+            block_size=`echo ${params} | cut -d '_' -f 2`
+            spark_parallelism=`echo ${params} | cut -d '_' -f 3`
+            rdd_compress=`echo ${params} | cut -d '_' -f 4`
+            shuffle_compress=`echo ${params} | cut -d '_' -f 5`
+            ${bin}/change_params.sh ${app} ${params} ${log_path}
+            ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
+            rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
+            gcsd=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 8| sed s/[[:space:]]//g`
+            gcvc=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 9| sed s/[[:space:]]//g`
+            if [[ ${rec_count} -eq 0 ]]; then
+                if [[ ${gcsd} != "nan" ]]; then
+                    if [[ ${gcvc} != "nan" ]]; then
+                        ${bin}/generate_sample_regression.sh ${sample_dir_path}/regression_${type_no}.csv ${input}_${spark_cores}_${block_size}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}_${mem}
+                    fi
+                fi
+            fi
+            mem=`expr ${mem} + ${MEM_STEP}`
+
+
+        done
+
+    done
+
+done
+
+
+
+
 #${bin}/sendmail.sh ${CONF}/sysconf.properties sample_pmc_${begin_ts}.csv ${sample_log_path}
-#${bin}/all_finish.sh ${CONF}/sysconf.properties
+${bin}/all_finish.sh ${CONF}/sysconf.properties
 
 

@@ -1,6 +1,6 @@
 input_size
-block_size
 exe_cores
+block_size
 parallelism
 rdd_compress
 shuffle_compress
