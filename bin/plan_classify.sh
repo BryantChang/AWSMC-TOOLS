@@ -46,8 +46,17 @@ mkdir -p ${SAMPLE_LOG}
 echo "begin to generate"
 
 touch ${sample_log_path}
-echo "GCSD,GCVC,pf,IPC,L1dmiss,L1imiss,L2miss,LLCmiss,LSR" >> ${sample_log_path}
-for app in `cat ${CONF}/apps`; do
+log_str=""
+for metric in `cat ${CONF}/${METRICS_CLASSIFY_CONF}`; do
+    if [[ ${metric:0:1} = "#" ]]; then
+        continue;
+    fi
+    log_str="${log_str},${metric}"
+done
+log_title=${log_str:1}
+echo ${log_title} >> ${sample_log_path}
+#echo "GCSD,GCVC,pf,IPC,L1dmiss,L1imiss,L2miss,LLCmiss,LSR" >> ${sample_log_path}
+for app in `cat ${CONF}/apps_classify`; do
     for input_mem in `cat ${CONF}/input_mem_${app}`; do
         if [[ "${input_mem:0:1}" = "#" ]]; then
             continue;
@@ -59,7 +68,7 @@ for app in `cat ${CONF}/apps`; do
         echo "init mem is ${mem} m"
         echo "init mem is ${mem} m" >> ${log_path}
         ${bin}/sample_finish.sh ${CONF}/sysconf.properties ${app} ${input}
-        for params in `cat ${CONF}/params`; do
+        for params in `cat ${CONF}/params_classify`; do
             if [[ "${params:0:1}" = "#" ]]; then
                 continue;
             fi
@@ -78,7 +87,7 @@ for app in `cat ${CONF}/apps`; do
                 if [[ ${rec_count} -eq 0 ]]; then
                     if [[ ${gcsd} != "nan" ]]; then
                         if [[ ${gcvc} != "nan" ]]; then
-                            ${bin}/generate_sample.sh ${app} ${sample_log_path} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
+                            ${bin}/generate_sample_classify.sh ${app} ${sample_log_path} ${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}
                             count=`expr ${count} + 1`
                         fi
                     fi

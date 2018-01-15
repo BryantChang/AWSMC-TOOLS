@@ -1,0 +1,8 @@
+KMeans=1
+LogisticRegression=1
+ShortestPaths=2
+SVM=2
+Terasort=3
+PCA=3
+PageRank=4
+SVDPlusPlus=4
