@@ -45,7 +45,7 @@ index = 1
 secs = 0
 while index < len(a):
     if len(a[index]) < 7:
-        i+=1
+        index+=1
         continue
     if not a[index][0].isdigit():
         index+=1
