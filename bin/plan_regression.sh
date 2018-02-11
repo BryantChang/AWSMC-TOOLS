@@ -89,20 +89,23 @@ for app_line in `cat ${CONF}/apps_regression`; do
             spark_parallelism=`echo ${params} | cut -d '_' -f 3`
             rdd_compress=`echo ${params} | cut -d '_' -f 4`
             shuffle_compress=`echo ${params} | cut -d '_' -f 5`
-            ${bin}/change_params.sh ${app} ${params} ${log_path}
-            ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
-            rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
-            gcsd=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 8| sed s/[[:space:]]//g`
-            gcvc=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 9| sed s/[[:space:]]//g`
-            if [[ ${rec_count} -eq 0 ]]; then
-                if [[ ${gcsd} != "nan" ]]; then
-                    if [[ ${gcvc} != "nan" ]]; then
-                        ${bin}/generate_sample_regression.sh ${sample_dir_path}/regression_${type_no}.csv ${input}_${spark_cores}_${block_size}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}_${mem}
+            while true
+            do
+                ${bin}/change_params.sh ${app} ${params} ${log_path}
+                ${bin}/run_workload.sh ${app} ${input} ${mem} ${log_path}
+                rec_count=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 7| sed s/[[:space:]]//g`
+                gcsd=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 8| sed s/[[:space:]]//g`
+                gcvc=`ssh ${SLAVE_HOST} cat ${GC_RES_LOG_DIR}/summary_${app}_${input}M_${mem}m_${spark_cores}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}.log | grep ${app} | cut -f 9| sed s/[[:space:]]//g`
+                if [[ ${rec_count} -eq 0 ]]; then
+                    if [[ ${gcsd} != "nan" ]]; then
+                        if [[ ${gcvc} != "nan" ]]; then
+                            ${bin}/generate_sample_regression.sh ${sample_dir_path}/regression_${type_no}.csv ${input}_${spark_cores}_${block_size}_${spark_parallelism}_${rdd_compress}_${shuffle_compress}_${mem}
+                            break
+                        fi
                     fi
                 fi
-            fi
-            mem=`expr ${mem} + ${MEM_STEP}`
-
+                mem=`expr ${mem} + ${MEM_STEP}`
+            done
 
         done
 

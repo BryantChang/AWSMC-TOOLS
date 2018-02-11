@@ -4,3 +4,4 @@ message="The sample generating is completed, and the sample log has been mailed 
 # message="hello world"
 conf_path = sys.argv[1]
 sms(conf_path, message)
+

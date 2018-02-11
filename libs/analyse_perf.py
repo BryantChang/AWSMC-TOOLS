@@ -36,7 +36,7 @@ sum_l1i_miss = 0
 sum_l2_miss = 0
 sum_dtlb_miss = 0
 sum_llc_miss = 0
-sum_load = 0 
+sum_load = 0
 sum_store = 0
 # print (len(a))
 
